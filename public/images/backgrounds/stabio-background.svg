@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 1280" fill="none">
+  <defs>
+    <linearGradient id="wash" x1="0" y1="0" x2="2048" y2="1280" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#e9ffff"/><stop offset=".52" stop-color="#ffffff"/><stop offset="1" stop-color="#e8fbff"/>
+    </linearGradient>
+    <linearGradient id="wave" x1="0" y1="900" x2="2048" y2="500" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#e66dff"/><stop offset=".36" stop-color="#7867ff"/><stop offset=".7" stop-color="#3e8dff"/><stop offset="1" stop-color="#69cbff"/>
+    </linearGradient>
+    <path id="line" d="M-140 1010C160 650 380 1240 700 975S1120 1160 1400 840s390-180 780-430"/>
+  </defs>
+  <rect width="2048" height="1280" fill="url(#wash)"/>
+  <g stroke="url(#wave)" stroke-width="1.7" opacity=".55">
+    <use href="#line" transform="translate(0 -220)"/><use href="#line" transform="translate(0 -202)"/><use href="#line" transform="translate(0 -184)"/><use href="#line" transform="translate(0 -166)"/><use href="#line" transform="translate(0 -148)"/><use href="#line" transform="translate(0 -130)"/><use href="#line" transform="translate(0 -112)"/><use href="#line" transform="translate(0 -94)"/><use href="#line" transform="translate(0 -76)"/><use href="#line" transform="translate(0 -58)"/><use href="#line" transform="translate(0 -40)"/><use href="#line" transform="translate(0 -22)"/><use href="#line"/><use href="#line" transform="translate(0 22)"/><use href="#line" transform="translate(0 44)"/><use href="#line" transform="translate(0 66)"/><use href="#line" transform="translate(0 88)"/><use href="#line" transform="translate(0 110)"/><use href="#line" transform="translate(0 132)"/><use href="#line" transform="translate(0 154)"/><use href="#line" transform="translate(0 176)"/><use href="#line" transform="translate(0 198)"/>
+  </g>
+</svg>

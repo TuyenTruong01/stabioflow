@@ -1,0 +1,16 @@
+export type PlanStatus = "active" | "paused" | "completed";
+export type CheckState = "waiting" | "ready" | "skipped" | "failed" | "completed" | "executed";
+export type ActivityType = "checked" | "quote" | "executed" | "skipped" | "failed" | "created" | "migrated";
+export type AutomationCondition = { type: "rsi"; asset: "BTC/USD"; period: number; timeframe: "1D" | "4H" | "1H"; operator: "below" | "above"; threshold: string };
+export type Schedule = { frequency: "daily" | "weekly"; dayOfWeek?: number; time: string; timezone: string };
+export type SmartConfig = { period: "daily" | "weekly"; checkIntervalMinutes: number; condition: AutomationCondition; maxPurchasesPerPeriod: number; periodStart: string; periodEnd: string; purchasesThisPeriod: number };
+export type PlanBase = { id: string; name: string; sourceAsset: "USDC"; targetAsset: "cirBTC"; amount: string; maxSlippage: string; maxFee: string; totalBudget: string; spentBudget: string; status: PlanStatus; createdAt: string; lastCheckedAt?: string; nextCheckAt: string; lastState?: CheckState; lastReason?: string; lastRsi?: string; marketUpdatedAt?: string; executions: number; skipped: number; history: AutomationExecution[] };
+export type ScheduledDcaPlan = PlanBase & { strategy: "scheduled_dca"; schedule: Schedule };
+export type SmartDcaPlan = PlanBase & { strategy: "smart_dca"; smart: SmartConfig };
+export type AutomationPlan = ScheduledDcaPlan | SmartDcaPlan;
+export type AutomationExecution = { at: string; status: "executed" | "failed"; amount: string; received?: string; txHash?: string; explorerUrl?: string; reason?: string };
+export type AutomationActivity = { id: string; planId: string; at: string; type: ActivityType; title: string; detail: string; explorerUrl?: string };
+export type AutomationStore = { version: 2; plans: AutomationPlan[]; activity: AutomationActivity[] };
+export type ParsedAutomationIntent = { strategy: "scheduled_dca" | "smart_dca"; amount: string; schedule?: Omit<Schedule, "timezone">; smart?: Pick<SmartConfig, "period" | "checkIntervalMinutes" | "condition" | "maxPurchasesPerPeriod">; maxSlippage: string; maxFee: string; totalBudget: string };
+export type MarketSeries = { closes: number[]; updatedAt: string; source: "CoinGecko" };
+export type PlanEvaluation = { state: CheckState; nextCheckAt: string; reason: string; rsi?: number; marketUpdatedAt?: string; smart?: SmartConfig; periodSkipped?: boolean };

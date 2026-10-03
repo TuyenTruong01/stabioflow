@@ -1,0 +1,4 @@
+nav a{font-weight:700}
+.topbar .wallet-area{width:auto;gap:10px}
+.topbar .network{min-height:35px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--text);padding:7px 13px;font-size:13px;font-weight:500;line-height:1.2}
+.topbar .network-button:hover{background:#f8fafc;border-color:#d9dee7}

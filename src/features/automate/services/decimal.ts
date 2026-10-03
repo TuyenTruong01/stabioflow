@@ -1,0 +1,5 @@
+const SCALE = 1_000_000n;
+export function decimal(value: string): bigint { const [whole = "0", fraction = ""] = value.trim().split("."); if (!/^\d+$/.test(whole) || (fraction && !/^\d+$/.test(fraction))) throw new Error("Invalid decimal value."); return BigInt(whole) * SCALE + BigInt((fraction + "000000").slice(0, 6)); }
+export function formatDecimal(value: string, digits = 2) { const raw = decimal(value); const whole = raw / SCALE; const fraction = String(raw % SCALE).padStart(6, "0").slice(0, digits).replace(/0+$/, ""); return fraction ? `${whole.toLocaleString("en-US")}.${fraction}` : whole.toLocaleString("en-US"); }
+export function formatScaled(raw: bigint, digits = 2) { const whole = raw / SCALE; const fraction = String(raw % SCALE).padStart(6, "0").slice(0, digits).replace(/0+$/, ""); return fraction ? `${whole.toLocaleString("en-US")}.${fraction}` : whole.toLocaleString("en-US"); }
+export function remaining(plan: { totalBudget: string; spentBudget: string }) { return decimal(plan.totalBudget) - decimal(plan.spentBudget); }
