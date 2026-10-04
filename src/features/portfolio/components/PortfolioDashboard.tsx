@@ -43,6 +43,7 @@ const chainLogo: Record<string, string> = {
   Sei: "/images/chains/sei.png",
   Injective: "/images/chains/injective.png",
   Ink: "/images/chains/ink.png",
+  Morph: "/images/chains/morph.png",
   Morpho: "/images/chains/morpho.png",
   Pharos: "/images/chains/pharos.png",
 };
@@ -65,7 +66,7 @@ function WorkflowCard({ href, icon, title, description, action, tone }: { href: 
 }
 
 export function PortfolioDashboard() {
-  const { address, chainId, provider } = useWallet();
+  const { address, chainId, provider, switchToArc } = useWallet();
   const [networks, setNetworks] = useState<ChainState[]>([]);
   const [showAll, setShowAll] = useState(false);
   const [earn, setEarn] = useState<EarnState>({ loading: false, unavailable: false, positions: 0, priceMissing: false });
@@ -148,7 +149,7 @@ export function PortfolioDashboard() {
         <h1 id="dashboard-title">Put your <span>stablecoins</span> to work.</h1>
         <p>View supported wallet assets, then move, earn, or swap when you are ready.</p>
       </div>
-      <Image className="dashboard-hero-art" src="/images/dashboard/stabio-dashboard-hero-wide.png" width={2560} height={360} sizes="(max-width: 1280px) 100vw, 1236px" alt="" preload />
+      <Image className="dashboard-hero-art" src="/images/dashboard/stabio-dashboard-hero-wide-bitcoin.png" width={2560} height={360} sizes="(max-width: 1280px) 100vw, 1236px" alt="" preload />
     </section>
 
     {!address ? <section className="card portfolio-empty dashboard-empty">
@@ -162,7 +163,7 @@ export function PortfolioDashboard() {
           <div className={`portfolio-allocation${allocation ? "" : " portfolio-allocation-empty"}`} aria-label={allocation ? "Portfolio allocation between wallet and earn" : "Portfolio allocation unavailable until live values load"}><div className="portfolio-donut" style={allocation ? { background: `conic-gradient(#62a4fb 0 ${allocation.walletPercent}%, #9560f5 ${allocation.walletPercent}% ${allocation.walletPercent + allocation.earnPercent}%, #e8edf5 ${allocation.walletPercent + allocation.earnPercent}% 100%)` } : undefined}><div><b>{fmtUsd(totals.total)}</b><span>Portfolio</span></div></div><div className="portfolio-allocation-legend"><span><i className="portfolio-legend-wallet" />Wallet <b>{fmtUsd(totals.total === undefined && totals.wallet === "0" ? undefined : totals.wallet)}</b>{allocation && <em>{allocation.walletPercent.toFixed(1)}%</em>}</span><span><i className="portfolio-legend-earn" />Earn <b>{earn.loading ? "Loading…" : fmtUsd(earn.value)}</b>{allocation && <em>{allocation.earnPercent.toFixed(1)}%</em>}</span></div></div>
           <div className="portfolio-summary-status">{totals.missing > 0 && <p className="portfolio-warning">◐ Partial valuation</p>}{totals.missing > 0 && <p className="muted">• Unvalued assets {totals.missing}</p>}<p className="muted">• Unified Balance not included</p>{totals.unavailable > 0 && <p className="portfolio-warning portfolio-unavailable">• {totals.unavailable} network{totals.unavailable === 1 ? "" : "s"} unavailable</p>}</div>
         </section>
-        <section className="card earn-card dashboard-earn-card"><div className="dashboard-earn-copy"><p className="eyebrow">In earn</p><h2>{earn.loading ? "Loading positions…" : earn.unavailable ? "Unavailable" : fmtUsd(earn.value ?? "0")}</h2><p className="muted earn-balance-caption">Total earning balance</p></div><div className="earn-position-row"><span className="earn-position-icon" aria-hidden="true">▤</span><span><b>{chainId !== ARC_MAINNET.id ? "Network unavailable" : earn.unavailable ? "Positions unavailable" : earn.positions ? `${earn.positions} active position${earn.positions === 1 ? "" : "s"}` : "No active positions"}</b><small>{chainId !== ARC_MAINNET.id ? "Switch to Arc Mainnet" : earn.unavailable ? "Try again shortly" : "Across supported vaults"}</small></span><i aria-hidden="true">›</i></div><Link href="/earn">View Earn<span aria-hidden="true">→</span></Link></section>
+        <section className="card earn-card dashboard-earn-card"><div className="dashboard-earn-copy"><p className="eyebrow">In earn</p><h2>{earn.loading ? "Loading positions…" : earn.unavailable ? "Unavailable" : fmtUsd(earn.value ?? "0")}</h2><p className="muted earn-balance-caption">Total earning balance</p></div>{chainId !== ARC_MAINNET.id ? <button className="earn-position-row earn-position-row-action" onClick={() => void switchToArc()}><span className="earn-position-icon" aria-hidden="true">▤</span><span><b>Network unavailable</b><small>Switch to Arc Mainnet</small></span><i aria-hidden="true">›</i></button> : <div className="earn-position-row"><span className="earn-position-icon" aria-hidden="true">▤</span><span><b>{earn.unavailable ? "Positions unavailable" : earn.positions ? `${earn.positions} active position${earn.positions === 1 ? "" : "s"}` : "No active positions"}</b><small>{earn.unavailable ? "Try again shortly" : "Across supported vaults"}</small></span><i aria-hidden="true">›</i></div>}<Link href="/earn">View Earn<span aria-hidden="true">→</span></Link></section>
       </div>
     </>}
 

@@ -20,6 +20,23 @@
   color: var(--text);
 }
 
+.wallet-area .network-button.header-control:not(:disabled) {
+  cursor: pointer;
+}
+
+.wallet-area .network-button.header-control:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.wallet-area .network-logo {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  border-radius: 5px;
+  object-fit: contain;
+}
+
 .wallet-area .wallet-summary.header-control {
   border: 1px solid transparent;
   background: #5b9894;
@@ -44,5 +61,17 @@
 @media (max-width: 900px) {
   .wallet-area .header-control {
     height: 42px;
+  }
+
+  .wallet-area .network-button.header-control {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 560px) {
+  .wallet-area .network-button.header-control {
+    width: 42px;
+    padding: 0;
+    font-size: 0;
   }
 }
